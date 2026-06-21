@@ -14,7 +14,7 @@
     <v-btn to="/books">Books</v-btn>
     <v-btn to="/cart">Cart</v-btn>
     <v-btn to="/library">Library</v-btn>
-    <v-btn to="/wishlist">WishList</v-btn>
+    <v-btn to="/wish-list">WishList</v-btn>
     <v-btn to="/admin">Admin</v-btn>
     <v-btn to="/profile">Profile</v-btn>
   </v-app-bar>
