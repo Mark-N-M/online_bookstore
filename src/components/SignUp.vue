@@ -32,7 +32,7 @@ function register()
       phone: phone.value,
       location: location.value,
       address: address.value,
-      password: password.value,
+      password: password.value, 
     }
     try{
       localStorage.setItem("user", JSON.stringify(data))
