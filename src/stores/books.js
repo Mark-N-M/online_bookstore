@@ -3,8 +3,8 @@ import { defineStore } from 'pinia'
 
 export const useBooksStore = defineStore('books',  {
    state: () => {
-     const books = {
-         0:{
+     const books = {                                                                                /*NB THE FOLLOWING ARE BOOK OBJECTS WITH VARIOUS OBJECT ID'S SO AS TO PREVENT DUPIICATE ON THE WISHLIST SECTION*/
+    0:{                                                                                            //THE OBJECTS CAN BE CALLED DATA MODELS
             id:1,
              image:"/Book-card1.jpg",
              name: "Change By Design",

@@ -1,5 +1,10 @@
 <script setup> //handles logic for signing up
 import { ref } from 'vue'
+import {useAuth} from '../services/auth'
+import {useRouter} from "vue-router";
+const router = useRouter();
+
+const {signup} = useAuth()
 
 const showPassword = ref(false)
 const password = ref(null) 
@@ -48,7 +53,10 @@ function register()                                    //definition of the funct
     <v-row>                                                                                                             
       <v-col>
         <v-card max-width="80%" class="bg-secondary"> <!--THIS IS THE CARD THAT WILL APPEAR BLUE I.E PARENT ELEMENT-->
-          <v-form class="mt-12 mb-2 mr-8">
+          <v-img src:="/logo.png" height="100" width="200" class="mt-4"></v-img>
+          <v-card-title class="ma-5">Sign Up</v-card-title>
+          <v-divider></v-divider>
+          <v-form class="ma-8">
 
 
             <v-row>
@@ -142,7 +150,7 @@ function register()                                    //definition of the funct
 
               <v-row>
               <v-col md="6">
-                <v-btn @click="register()">Sign Up</v-btn>
+                <v-btn @click="register()" block>Sign Up</v-btn>
               </v-col>                                          <!--ROW SIX-->
               <v-col md="6">                                      <!--WHEN WE CALL THE FUNCTION USING REGISTER IT USUALLY CALLS THE INFORMATION WITHIN THE OBJECT OF THE FUNCTION I.E THE MODELS-->
                 <div>
