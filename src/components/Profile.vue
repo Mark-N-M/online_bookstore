@@ -17,7 +17,7 @@ const user =JSON.parse(localStorage.getItem('user'))
       <v-col cols="auto">
         <!-- AVATAR IMAGE GOES HERE -->
         <!-- swap '/replacement.jpg' for the exact filename + extension you upload -->
-        <v-avatar size="100" :image="'/replacement.jpg'"></v-avatar>
+        <v-avatar size="100" :image="'/replacement.png'"></v-avatar>
       </v-col>
       <v-col class="d-flex align-center">
         <div class="text-h6">{{ user.firstname }} {{ user.lastname }}</div>
