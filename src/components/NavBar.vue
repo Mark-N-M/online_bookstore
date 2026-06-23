@@ -16,7 +16,7 @@ const isAuthenticated = localStorage.getItem('isAuthenticated')
     <v-btn to="/library">Library</v-btn>
     <v-btn to="/wish-list">WishList</v-btn>
     <v-btn to="/admin">Admin</v-btn>
-    <v-btn to="/profile" v-if="isAuthenticated">Profile</v-btn>
+    <v-btn to="/profile" v-if="isAuthenticated">Profile</v-btn>    <!--if the user has signed up its going to push them to the profile component/page-->
     <v-btn to="/login" v-else="">Login</v-btn>                      <!--in the user has not signed up yet its going to bring them to the login page-->
   </v-app-bar>
    
