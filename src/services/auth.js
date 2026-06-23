@@ -41,9 +41,9 @@ export function useAuth() {
             isAuthenticated.value = true
             if (data.role == 1) isAdmin.value = true
 
-            localStorage.setItem("isAuthenticated", isAuthenticated.value);
-            localStorage.setItem("isAdmin", isAdmin.value);
-            localStorage.setItem("user", JSON.stringify(data))
+            localStorage.setItem("isAuthenticated", isAuthenticated.value);  //check if authenticated allowed access into the page
+            localStorage.setItem("isAdmin", isAdmin.value);                   //checking if its an admin i.e role 1
+            localStorage.setItem("user", JSON.stringify(data))                //if its a user i.e role 2
         }catch{
             console.log("Error signing up")
         }

@@ -9,7 +9,7 @@ import Cart from '@/components/Cart.vue'
 import WishList from '@/components/WishList.vue'
 import Library from '@/components/Library.vue'
 import SignUp from '@/components/SignUp.vue'
-
+import Login from  '@/components/Login.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -57,7 +57,13 @@ const router = createRouter({
     {
       path: '/library',
       component: Library,
+    },
+
+    {
+      path: '/login',
+      component: Login,
     }
+
   ],
 })
 

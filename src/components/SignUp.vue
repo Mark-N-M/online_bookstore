@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import {useAuth} from '../services/auth'
 import {useRouter} from "vue-router";
-const router = useRouter();
+const router = useRouter();                         //used to switch pages simillar to how buttons work
 
 const {signup} = useAuth()
 
@@ -38,12 +38,14 @@ function register()                                    //definition of the funct
       location: location.value,
       address: address.value,
       password: password.value, 
+      role:2,                                             //<--this refers to type of roles i.e having an admin or customer or even a middleman e.g a mod hence in such a scenario we can give out 3 roles
+      
+      //basically role 1 is for admin and role 2 is a customer
     }
-    try{
-      localStorage.setItem("user", JSON.stringify(data))
-    }catch{
-      console.log("Error signing up")
-    }
+    signup(data)                                        //this is a function from the auth file and also it is called from auth.js
+    router.push('/').then(()=>{                         //definition of a function??
+      router.go(0)                                      //can be used to move to a page aswell i.e going to another page
+    });
     
 }
 </script>
@@ -52,8 +54,8 @@ function register()                                    //definition of the funct
   <v-container align="center" class="mt-16">  <!--THE CONTAINER ENCLOSING EVERYTHING-->
     <v-row>                                                                                                             
       <v-col>
-        <v-card max-width="80%" class="bg-secondary"> <!--THIS IS THE CARD THAT WILL APPEAR BLUE I.E PARENT ELEMENT-->
-          <v-img src:="/logo.png" height="100" width="200" class="mt-4"></v-img>
+        <v-card max-width="80%" class="bg-primary"> <!--THIS IS THE CARD THAT WILL APPEAR BLUE I.E PARENT ELEMENT-->
+          <v-img src="/logo.png" height="100" width="200" class="mt-4"></v-img>
           <v-card-title class="ma-5">Sign Up</v-card-title>
           <v-divider></v-divider>
           <v-form class="ma-8">
@@ -99,7 +101,7 @@ function register()                                    //definition of the funct
                 <div>Location</div>
               </v-col>
               <v-col md="3">
-                <v-select :items="['Nairobi', 'Mombasa', 'Meru', 'Kajiado', 'Thika']"  v-model="locatiion"></v-select>        <!--ROW THREE-->
+                <v-select :items="['Nairobi', 'Mombasa', 'Meru', 'Kajiado', 'Thika']"  v-model="location"></v-select>        <!--ROW THREE-->
               </v-col>
               <v-col md="3">
                 <div>Address</div>
