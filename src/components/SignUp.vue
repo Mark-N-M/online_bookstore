@@ -23,7 +23,7 @@ const address = ref(null)
 
 
 //FUNCTION
-function register()
+function register()                                    //definition of the function is by the parentheses and then we make an object within which we fit everything that we "call" after calling the function
 { 
     const data ={
       firstname: firstname.value,
