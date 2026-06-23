@@ -55,7 +55,7 @@ function login()                                    //definition of the function
             </v-row>
 
              <v-row>
-              <v-col md="3"> <!--PASSWORD-->                                      <!--ROW TWO-->
+              <v-col md="4"> <!--PASSWORD-->                                      <!--ROW TWO-->
                 <div>
                   Password </div>
               </v-col>

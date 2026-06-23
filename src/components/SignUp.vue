@@ -157,6 +157,7 @@ function register()                                    //definition of the funct
               <v-col md="6">                                      <!--WHEN WE CALL THE FUNCTION USING REGISTER IT USUALLY CALLS THE INFORMATION WITHIN THE OBJECT OF THE FUNCTION I.E THE MODELS-->
                 <div>
                   Already Have An account?
+                  <router-link to="login">Login</router-link>
                 </div>
               </v-col> 
             </v-row>

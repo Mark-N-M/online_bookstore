@@ -49,10 +49,10 @@ export function useAuth() {
         }
     }
 
-    // Logout
+    // Logout function
     function logout() {
-        localStorage.removeItem("authToken");
-        localStorage.removeItem("user");
+        localStorage.removeItem("isAuthenticated");
+        // localStorage.removeItem("user");
         localStorage.removeItem("isAdmin");
     }
     return {
