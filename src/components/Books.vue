@@ -55,7 +55,7 @@ function buy(book){
                     <v-card-actions>
                         <v-btn color="primary" variant="elevated" @click="buy(book)">Add to Cart</v-btn>
                           <v-btn color="primary" variant="elevated" @click="view(book)">View Book</v-btn>
-                          <v-btn @click="addToWishlist(book)" color="secondary">Add to Wishlist</v-btn>                         <!--On click it adds an object called book which contains key and value-->
+                          <v-btn mdi-icon="heart" @click="addToWishlist(book)" color="secondary">Add to Wishlist</v-btn>                         <!--On click it adds an object called book which contains key and value-->
                     </v-card-actions>
                 </v-card>
                         

@@ -1,12 +1,14 @@
 <script setup>
 const user =JSON.parse(localStorage.getItem('user'))
+import { useRouter } from 'vue-router'
+const router = useRouter()
 </script>
 
 <template>
       <v-container v-if="user" class="mt-8">
     <v-row>
       <v-col cols="auto">
-        <v-btn icon="mdi-arrow-left" variant="text" @click="router.back()"></v-btn>
+        <v-btn icon="mdi-arrow-left" variant="text" @click="router.back('')"></v-btn> <!--BUG HERE REDIRECTION SHOULD BE TO LANDING PAGE-->
       </v-col>
       <v-col>
         <div class="text-h5 mt-2">About me</div>
@@ -15,14 +17,13 @@ const user =JSON.parse(localStorage.getItem('user'))
 
     <v-row class="mt-4">
       <v-col cols="auto">
-        <!-- AVATAR IMAGE GOES HERE -->
-        <!-- swap '/replacement.jpg' for the exact filename + extension you upload -->
-        <v-avatar size="100" :image="'/replacement.png'"></v-avatar>
-      </v-col>
-      <v-col class="d-flex align-center">
-        <div class="text-h6">{{ user.firstname }} {{ user.lastname }}</div>
-      </v-col>
-    </v-row>
+          <v-avatar size="100" :image="'/replacement.png'"></v-avatar>
+        </v-col>
+        <v-col class="d-flex align-center">
+          <div class="text-h6">{{ user.firstname }} {{ user.lastname }}</div>
+        </v-col>
+      </v-row>
+        
 
     <v-row class="mt-6">
       <v-col cols="12">
