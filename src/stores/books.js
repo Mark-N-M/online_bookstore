@@ -12,7 +12,7 @@ export const useBooksStore = defineStore('books',  {
              description:"The book details how organizations can solve complex problems by balancing human desirability, technical feasibility, and economic viability through empathy, radical collaboration, and rapid prototyping.",
              author:"Tim Brown",
              long_description:"Argues that design thinking — the methods designers use — can be applied by anyone to solve business and social problems through empathy, experimentation, and prototyping.",
-             genre:"",
+             genre:"Design, Business, Nonfiction",
              rating: 4
      
          },
@@ -24,8 +24,8 @@ export const useBooksStore = defineStore('books',  {
              price: 2035,
              description:"Argues how the occult is a rational symbolic system where human willpower interacts with cosmic forces",
              author:"Richard Cavendish",
-             long_description:"",
-             genre:"",
+             long_description:"A widely researched historical study of witchcraft, demonology, astrology, and other mystical practices across the ages",
+             genre:"Occult, History, Nonfiction",
              rating: 4
          },
      
@@ -36,8 +36,8 @@ export const useBooksStore = defineStore('books',  {
              price: 2200,
              description:"Describes art as a perception: Creativity is a state of awareness. ",
              author:"Rick Rubin",
-             long_description:"",
-             genre:"",
+             long_description:"Legendary music producer Rick Rubin reflects on where creativity comes from and how anyone, in any field, can live a more creative life.",
+             genre:"Fiction, Fantasy, Magical Realism",
              rating: 4
      
          },
