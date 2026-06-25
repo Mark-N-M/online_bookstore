@@ -5,16 +5,16 @@ import { useUsersStore } from '../stores/users'
 import { useOrdersStore } from '../stores/orders'
 
 const booksStore = useBooksStore()
-const usersStore = useUsersStore()
+const usersStore = useUsersStore()                      //basically stores are defined as the value here Each line activates that store and stores the connection in a variable. Until this runs, booksStore etc. don't exist as usable objects.
 const ordersStore = useOrdersStore()
 
 
-const books= booksStore.books
+const books= booksStore.books                       //<--Pulls the actual data out of each store into a shorter local name therefore allowing one to write books instead of the store name i.e bookStore.books
 const users= usersStore.users                       //HERE THEY ARE CALLING THE DATA EMBEDDED WITHIN THE STORES SINCE WE HAVE ALLOWED THE ADMIN.VUE COMPONENT TO IMPORT FROM BOTH STORES I.E USER.JS AND ORDERS.JS HENCE AFTER ASSIGNING OTHER NAMES USING CONST TO OUR VARIABLE WE CAN CALL IT ONCE MORE AND IT WILL FINALLY WORK
 const orders= ordersStore.orders
-const allOrders = Object.values(orders).map(order => { //map helps us access each nested object using Object.value and find also works as map
-    const book = Object.values(books).find(book => book.id === order.book_id);  //find does a return of what you are looking for
-    const user = Object.values(users).find(user => user.id === order.customer_id); //both map and find work like for loops here there are data relationships between two different data sets eg order and a book also read on data modelling
+const allOrders = Object.values(orders)/*dropstheobjectsinformofarraysformaptowork*/.map(order => { //map helps us access each nested object using Object.value and find also works as map and  runs the function once per order.
+    const book = Object.values(books).find(book => book.id === order.book_id);//turns books into an array too, then .find() walks through it and returns the first book whose id matches this order's book_id. If nothing matches, .find() returns undefined.
+    const user = Object.values(users).find(user => user.id === order.customer_id); //This works simillarly to the above comment i.e sources for id's if non are found then it will return the value undefined                                       both map and find work like for loops here there are data relationships between two different data sets eg order and a book also read on data modelling
   return {
     ...order,
 
@@ -29,6 +29,161 @@ const allOrders = Object.values(orders).map(order => { //map helps us access eac
 
 
 const tab = ref(null)
+const showAddBookDialog = ref(false)
+const showEditBookDialog = ref(false)
+const showAddUserDialog = ref(false)
+const showEditUserDialog = ref(false)
+//books
+//1. create models
+//2. create a function to add new book
+//3. create the add book form
+
+//book models
+const bookId=ref(null)
+const bookName=ref(null)
+const price=ref(null)
+const description =ref(null)
+const long_description=ref(null)                    //these are reactive data in that the values within them change in correspondance to the users inputs eg for book id if the user choses nothing it will remain blank but if an existing id is called then it will display the book appropriately
+const genre=ref(null)
+const image=ref(null)
+const author=ref(null)  
+const rating=ref(null)
+
+//add new book
+function addBook(){
+    const bookData = {
+        bookId: bookId.value,
+        bookName: bookName.value,
+        price: price.value,
+        description: description.value,
+        long_description: long_description.value,               //these are example of datamodels once more data is being called from the books models and this section is for calling the functions for display when reactivity comes to play
+        genre: genre.value,
+        image: image.value,
+        author: author.value,
+        rating: rating.value
+    }
+    //to do: update books in the store
+    const updatedBook = {
+        ...books,
+        14: bookData
+    }
+}
+
+//edit book
+function editBook(book){
+    bookId.value = book.id
+    bookName.value = book.name
+    price.value = book.price
+    description.value = book.description
+    long_description.value = book.long_description
+    genre.value = book.genre
+    image.value = book.image
+    author.value = book.author
+    rating.value = book.rating
+    showEditBookDialog.value = true
+}
+function updateBook(){
+     const bookData = {
+        bookId: bookId.value,
+        bookName: bookName.value,
+        price: price.value,
+        description: description.value,
+        long_description: long_description.value,               //these are example of datamodels once more data is being called from the books models and this section is for calling the functions for display when reactivity comes to play so its easier instead of re-wrting stuff again
+        genre: genre.value,
+        image: image.value,
+        author: author.value,
+        rating: rating.value
+    }
+    //to do update book
+
+    close()
+}
+
+//user models
+const userId = ref(null)
+const firstname = ref(null)              // Every single time someone loads the sign-up page fresh, firstname.value (and all the others) start back at null. There's no memory of what a previous visitor typed — each new page load creates a brand new ref(null), completely blank again.
+const lastname = ref(null)
+const email = ref(null)                 //these are constant variable and ref keeps track of the value in the text box and null keeps the textbox empty to allow a variety of people input their specific info i.e we dont want ppl to have a simillar name hence telling the computer to give everyone a blank value
+const phone = ref(null)                   
+const location = ref(null)
+const address = ref(null)
+const password = ref(null) 
+
+//add user
+function addUser(){                     //we are calling from the data model for users
+const data ={
+    userId: userId.value,
+    firstname: firstname.value,
+    lastname: lastname.value,                      
+    email: email.value,                              
+    phone: phone.value,
+    location: location.value,
+    address: address.value,
+    password: "qwerty1234..", 
+    role:2,
+    }
+    //to do:add user
+
+    close()
+}
+//edit user
+function editUser(user){
+    userId.value = user.id
+    firstname.value = user.firstname
+    lastname.value = user.lastname
+    email.value = user.email                        //here I think we are probably calling the data models for the value I think
+    location.value = user.location
+    address.value = user.address
+    password.value = user.password
+    showEditUserDialog.value = true 
+}
+
+
+//update user
+function updateUser(){
+    const data ={
+    userId: userId.value,
+    firstname: firstname.value,
+    lastname: lastname.value,                      
+    email: email.value,                              
+    phone: phone.value,
+    location: location.value,
+    address: address.value,
+    password: "qwerty1234..", //this is a fixed value so we arent inputting it as its fixed i.e in the data model close function its not being called
+    role:2,
+    }
+    //to do: edit user
+
+    close()
+}
+
+function close(){
+//booksookd.value = null
+bookName.value =null
+price.value = null
+description.value = null
+long_description.value = null
+genre.value = null
+image.value = null
+author.value = null
+rating.value = null
+showAddBookDialog.value = false                  //these are conjoined to buttons in a manner that they close the dialogue
+showEditBookDialog.value = false                //this is the close function for the edit dialogue
+ 
+
+    //user
+    userId.value = null
+    firstname.value = null
+    lastname.value = null
+    email.value = null
+    phone.value = null
+    location.value = null
+    address.value = null
+    password.value = null
+    showAddUserDialog.value = false
+    showEditUserDialog.value = false
+}
+
 
 </script>
 
@@ -37,20 +192,20 @@ const tab = ref(null)
         <v-card>
             <v-tabs v-model="tab" align-tabs="center" color="primary" >
                 <v-tab :value="1">Books</v-tab>
-                <v-tab :value="2">Users</v-tab>
+                <v-tab :value="2">Users</v-tab>                                 <!--creates 3 buttons which all have 3 vales and on click the values are used at takes the user to the values-->
                 <v-tab :value="3">Orders</v-tab>
             </v-tabs>
 
-            <v-tabs-window v-model="tab">
+            <v-tabs-window v-model="tab">                                       <!--matching content area in the page i.e within the card-->
                 <!-- Books -->
-                <v-tabs-window-item :value="1">
+                <v-tabs-window-item :value="1">                                 <!--tab-1-->
                     <div v-if="books == null||books==undefined||Object.keys(books).length == 0" align="center">
                         <v-row>
                             <v-col cols="12" md="6" sm="12" >
                                 <div class="text-h6">No books found</div>
                             </v-col>
                             <v-col cols="12" md="6" sm="12" >
-                                <v-btn class="ma-2" color="blue-darken-2" icon="mdi-plus" @click="showAddUserDialog = true"></v-btn>
+                                <v-btn class="ma-2" color="blue-darken-2" icon="mdi-plus" @click="showAddBookDialog = true"></v-btn>
                             </v-col>
                         </v-row>
                     </div>
@@ -58,7 +213,7 @@ const tab = ref(null)
                         <v-container>
                             <v-row>
                                 <v-col cols="12" md="12" sm="12" align="right">
-                                    <v-btn class="ma-2" color="blue-darken-2" icon="mdi-plus" @click="showAddUserDialog = true"></v-btn>
+                                    <v-btn class="ma-2" color="blue-darken-2" icon="mdi-plus" @click="showAddBookDialog = true"></v-btn>
                                 </v-col>
                             </v-row>
                         <v-row>
@@ -200,4 +355,207 @@ const tab = ref(null)
             
         </v-card>
     </v-container>
+
+    <!--dialogs-->
+    <!--Book dialog-->
+    <!--Add Book-->
+     <v-dialog v-model="showAddBookDialog" max-width="600">
+        <v-form @submit.prevent >
+            <v-card>
+                <v-card-title class="pa-6">                         
+                <v-row>
+                        Add Book
+                        <v-spacer></v-spacer>
+                        <v-btn class="ma-2" color="blue-darken-2" icon="mdi-close" @click="close();"></v-btn>
+                    </v-row>
+                </v-card-title>
+                <v-card-text>
+                    <v-row>
+                        <v-col md="6">
+                            <v-text-field label="Book Title" v-model="bookName" required></v-text-field>
+                        </v-col>
+                        <v-col md="6">
+                            <v-text-field label="Author" v-model="author" required></v-text-field>
+                        </v-col>
+                    </v-row>
+                    <v-row>
+                        <v-col md="6">
+                            <v-text-field label="Image" v-model="image" required></v-text-field>
+                        </v-col>
+                        <v-col md="6">
+                            <v-text-field label="Price" v-model="price" required></v-text-field>
+                        </v-col>
+                    </v-row>
+                    <v-row>
+                        <v-col md="12">
+                            <v-textarea label="Short Description" v-model="description" required></v-textarea>
+                        </v-col>
+                    </v-row>
+                    <v-row>
+                        <v-col md="12">
+                            <v-textarea label="Long Description" v-model="long_description" required></v-textarea>
+                        </v-col>
+                    </v-row>
+                    <v-row>
+                        <v-col md="6">
+                            <v-select :items="['Fiction', 'Non Fiction', 'Educational', 'Self Help']" v-model ="genre">
+                            </v-select>
+                        </v-col>
+                    </v-row>
+                </v-card-text>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn text="Close" variant="plain" @click="close()" ></v-btn>
+                    <v-btn color="primary"  text="Save" variant="tonal" @click="addBook()" ></v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-form>
+    </v-dialog>
+
+
+     <!--Edit Book-->
+     <v-dialog v-model="showEditBookDialog" max-width="600">
+        <v-form @submit.prevent >
+            <v-card>
+                <v-card-title class="pa-6">                         
+                <v-row>
+                        Edit Book
+                        <v-spacer></v-spacer>
+                        <v-btn class="ma-2" color="blue-darken-2" icon="mdi-close" @click="close();"></v-btn>
+                    </v-row>
+                </v-card-title>
+                <v-card-text>
+                    <v-row>
+                        <v-col md="6">
+                            <v-text-field label="Book Title" v-model="bookName" required></v-text-field>
+                        </v-col>
+                        <v-col md="6">
+                            <v-text-field label="Author" v-model="author" required></v-text-field>
+                        </v-col>
+                    </v-row>
+                    <v-row>
+                        <v-col md="6">
+                            <v-text-field label="Image" v-model="image" required></v-text-field>
+                        </v-col>
+                        <v-col md="6">
+                            <v-text-field label="Price" v-model="price" required></v-text-field>
+                        </v-col>
+                    </v-row>
+                    <v-row>
+                        <v-col md="12">
+                            <v-textarea label="Short Description" v-model="description" required></v-textarea>
+                        </v-col>
+                    </v-row>
+                    <v-row>
+                        <v-col md="12">
+                            <v-textarea label="Long Description" v-model="long_description" required></v-textarea>
+                        </v-col>
+                    </v-row>
+                    <v-row>
+                        <v-col md="6">
+                            <v-select :items="['Fiction', 'Non Fiction', 'Educational', 'Self Help']" v-model ="genre">
+                            </v-select>
+                        </v-col>
+                    </v-row>
+                </v-card-text>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn text="Close" variant="plain" @click="close()" ></v-btn>
+                    <v-btn color="primary"  text="Update" variant="tonal" @click="updateBook()" ></v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-form>
+    </v-dialog>
+    <!--User Dialogs-->
+     <!-- Add User -->
+    <v-dialog v-model="showAddUserDialog" max-width="600">
+        <v-card>
+            <v-card-title class="pa-6">
+            <v-row>
+                    Add User
+                    <v-spacer></v-spacer>
+                    <v-btn class="ma-2" color="blue-darken-2" icon="mdi-close" @click="close();"></v-btn>
+                </v-row>
+            </v-card-title>
+            <v-card-text>
+                <v-row>
+                    <v-col md="6">
+                        <v-text-field label="First Name" v-model="firstname"></v-text-field>
+                    </v-col>
+                    <v-col md="6">
+                        <v-text-field label="Last Name" v-model="lastname"></v-text-field>
+                    </v-col>
+                </v-row>
+                
+                    <v-row>
+                    <v-col md="6">
+                        <v-text-field label="Email" v-model="email"></v-text-field>
+                    </v-col>
+                    <v-col md="6">
+                        <v-text-field label="254722345678" v-model="phone"></v-text-field>
+                    </v-col>
+                </v-row>
+                <v-row>
+                    <v-col md="6">
+                        <v-select v-model="location" label="Location" :items="['CBD', 'Madaraka', 'Westlands', 'Buruburu']" variant="outlined" ></v-select>
+                    </v-col>
+                    <v-col md="6">
+                            <v-text-field label="Address" v-model="address"></v-text-field>
+                    </v-col>
+                </v-row>
+            </v-card-text>
+            <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn text="Close" variant="plain" @click="close()" ></v-btn>
+                <v-btn color="primary"  text="Save" variant="tonal" @click="addUser()" ></v-btn>
+            </v-card-actions>
+        </v-card>
+    </v-dialog>
+
+
+      <!--Edit User-->
+    <v-dialog v-model="showEditUserDialog" max-width="600">
+        <v-card>
+            <v-card-title class="pa-6">
+            <v-row>
+                    Edit User
+                    <v-spacer></v-spacer>
+                    <v-btn class="ma-2" color="blue-darken-2" icon="mdi-close" @click="close();"></v-btn>
+                </v-row>
+            </v-card-title>
+            <v-card-text>
+                <v-row>
+                    <v-col md="6">
+                        <v-text-field label="First Name" v-model="firstname"></v-text-field>
+                    </v-col>
+                    <v-col md="6">
+                        <v-text-field label="Last Name" v-model="lastname"></v-text-field>
+                    </v-col>
+                </v-row>
+                
+                    <v-row>
+                    <v-col md="6">
+                        <v-text-field label="Email" v-model="email"></v-text-field>
+                    </v-col>
+                    <v-col md="6">
+                        <v-text-field label="254722345678" v-model="phone"></v-text-field>
+                    </v-col>
+                </v-row>
+                <v-row>
+                    <v-col md="6">
+                        <v-select v-model="location" label="Location" :items="['CBD', 'Madaraka', 'Westlands', 'Buruburu']" variant="outlined" ></v-select>
+                    </v-col>
+                    <v-col md="6">
+                            <v-text-field label="Address" v-model="address"></v-text-field>
+                    </v-col>
+                </v-row>
+            </v-card-text>
+            <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn text="Close" variant="plain" @click="close()" ></v-btn>
+                <v-btn color="primary"  text="update" variant="tonal" @click="updateUser()" ></v-btn>
+            </v-card-actions>
+        </v-card>
+    </v-dialog>
+
 </template>
