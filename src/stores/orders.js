@@ -4,7 +4,7 @@ import { defineStore } from 'pinia'
 export const useOrdersStore = defineStore('orders',  {
    state: () => {
         const orders= {                                 //HERE WE CREATED AN OBJECT IN ORDER TO CALL FROM ANOTHER FUNCTION IN ADMIN AS WE HAVE THE TAB WINDOWS THERE
-          0:{
+          0:{                                           //NB:The short answer: book_id isn't a variable you declared anywhere. It's a property name — a key inside the order objects that live in your orders store's data.
             id:1,
             customer_id:1,
             book_id:2,

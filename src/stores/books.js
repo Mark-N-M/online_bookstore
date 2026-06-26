@@ -5,7 +5,7 @@ export const useBooksStore = defineStore('books',  {
    state: () => {
      const books = {                                                                                /*NB THE FOLLOWING ARE BOOK OBJECTS WITH VARIOUS OBJECT ID'S SO AS TO PREVENT DUPIICATE ON THE WISHLIST SECTION*/
     0:{                                                                                            //THE OBJECTS CAN BE CALLED DATA MODELS
-            id:1,
+            id:1,                                                           //these are the id's for books and from here we can take referral when calling the id's while embedding the object data with other objects(THIS WAS AFTER DOING ADMIN ORDER STORES AND USER STORES)
              image:"/Book-card1.jpg",
              name: "Change By Design",
              price: 1800,

@@ -5,7 +5,7 @@ export const useUsersStore = defineStore('users',  {
    state: () => {
         const users= {                                      //HERE WE CREATED AN OBJECT IN ORDER TO CALL FROM ANOTHER FUNCTION IN ADMIN AS WE HAVE THE TAB WINDOWS THERE
           0:{
-            id:1,
+            id:1,                                            //these id's are very important when calling data as it kinda saves us the burden of rewritting the code again
             firstname:"Billy",
             lastname: "Jean",
             email: "billy@example.com",

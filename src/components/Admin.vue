@@ -14,10 +14,10 @@ const users= usersStore.users                       //HERE THEY ARE CALLING THE 
 const orders= ordersStore.orders
 const allOrders = Object.values(orders)/*dropstheobjectsinformofarraysformaptowork*/.map(order => { //map helps us access each nested object using Object.value and find also works as map and  runs the function once per order.
     const book = Object.values(books).find(book => book.id === order.book_id);//turns books into an array too, then .find() walks through it and returns the first book whose id matches this order's book_id. If nothing matches, .find() returns undefined.
-    const user = Object.values(users).find(user => user.id === order.customer_id); //This works simillarly to the above comment i.e sources for id's if non are found then it will return the value undefined                                       both map and find work like for loops here there are data relationships between two different data sets eg order and a book also read on data modelling
-  return {
-    ...order,
-
+    const user = Object.values(users).find(user => user.id === order.customer_id); //This works simillarly to the above comment i.e sources for id's if non are found then it will return the value undefined                                       both map and find work like for loops here there are data relationships between two different data sets eg order and a book also read on data modelling this takes reference to the store object id when taking referral to information
+  return {      
+...order,       //here we are taking raw object data i.e order from the object from the store and then .find(user => user.id) this maps to the physical object in the user store and sources the object id from that particular store therefore spilling out data from within that stores object in this case a user object 
+                
     //ternary operator i.e ? is simillar or rather same as a conditional statement i.e implication of if, else if and else
     //when you are searching for it it is usually a ? then a : TO BE EXPLAINED LATER
     customer: user ? user.firstname + ' '+  user.lastname: 'Unknown User',  
