@@ -98,7 +98,7 @@ export const useBooksStore = defineStore('books',  {
              description:"In a small Tokyo café, customers can travel back in time — but only if they return before their coffee gets cold.",
              author:"Toshikazu Kawaguchi.",
              long_description:"Set in a Tokyo café where a particular seat lets customers travel back in time, the novel follows four visitors as each confronts a regret from their past — a estranged sister, a husband with dementia, a daughter she never met — under one strict rule: they must return before the coffee gets cold.",
-             genre:"",
+             genre:"Time Travel, Contemporary Fiction, Magical Realism",
              rating: 4
          },
      
@@ -162,7 +162,7 @@ export const useBooksStore = defineStore('books',  {
              rating: 4
          },
      
-          13:{
+          13:{                      //13 is the key and the items inside are the values
              id:14,
              image:"/Book-card14.jpg",
              name: "The Catcher In The Rye",
@@ -185,6 +185,52 @@ export const useBooksStore = defineStore('books',  {
        updateSelectedBook (payload) {
            this.selectedBook = payload
        },
+
+        addBook(payload) {
+            //gets the last key on the books object 
+            const existingKeys = Object.keys(this.books).map(Number);               //get object from key
+            const maxKey = existingKeys.length > 0 ? Math.max(...existingKeys) : 0; //the existingKeys.length gets the keys in the object and the max gets the highest value i.e 13 in our case
+            const nextKey = maxKey + 1;                 //used for adding more objects i.e giving functionality for the + icon
+
+            //insert into object
+            this.books[nextKey] = {
+                ...payload,                 //data that user is typing on the text field i.e the admin i.e the payload
+                id: nextKey                   
+            };
+        },
+        edit(id, payload) {
+            //find the book in the object
+            const book = Object.entries(this.books).find(
+                ([key, item]) => item.id === id //find compares the id's to make sure they match i.e find book compare id btwn one sent and one found
+            );
+
+            if (!book) {                                //if not book then an alert error to alert user
+                console.error(`No book found with id: ${id}`);
+                return;
+            }
+
+            const [objectKey] = book;
+            //if found editing happens i.e
+            //replace the existing book data with what was recieved in payload i.e the first function up finds a new id and adds data to payload
+            this.books[objectKey] = {
+                ...this.books[objectKey], //spread operator i.e (...) allows you to find
+                ...payload   //the spread operator just picks out raw data from the payload               
+            };
+        },
+        //this finds the book if its not present it alerts the user and afterwards the user can just delete the new payload
+        deleteBook(id) {
+            const book = Object.entries(this.books).find(
+                ([key, item]) => item.id === id
+            );
+            if (!book) {
+                console.error(`Cannot delete: No book found id: ${id}`);
+                return;
+            }
+
+            const [objectKey] = book;
+
+            delete this.books[objectKey];
+        }
    },
    persist: true,
 })

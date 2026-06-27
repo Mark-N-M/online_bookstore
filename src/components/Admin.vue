@@ -29,6 +29,7 @@ const allOrders = Object.values(orders)/*dropstheobjectsinformofarraysformaptowo
 
 
 const tab = ref(null)
+const refreshKey = ref(0)
 const showAddBookDialog = ref(false)
 const showEditBookDialog = ref(false)
 const showAddUserDialog = ref(false)
@@ -53,7 +54,7 @@ const rating=ref(null)
 function addBook(){
     const bookData = {
         bookId: bookId.value,
-        bookName: bookName.value,
+        name: bookName.value,
         price: price.value,
         description: description.value,
         long_description: long_description.value,               //these are example of datamodels once more data is being called from the books models and this section is for calling the functions for display when reactivity comes to play
@@ -62,12 +63,12 @@ function addBook(){
         author: author.value,
         rating: rating.value
     }
-    //to do: update books in the store
-    const updatedBook = {
-        ...books,
-        14: bookData
-    }
+    //update books in the store-This should be able to work now
+    booksStore.addBook(bookData)
+    close()//<--close function for once we are finished we can hop out of the dialogue
 }
+        
+
 
 //edit book
 function editBook(book){
@@ -85,7 +86,7 @@ function editBook(book){
 function updateBook(){
      const bookData = {
         bookId: bookId.value,
-        bookName: bookName.value,
+        name: bookName.value,
         price: price.value,
         description: description.value,
         long_description: long_description.value,               //these are example of datamodels once more data is being called from the books models and this section is for calling the functions for display when reactivity comes to play so its easier instead of re-wrting stuff again
@@ -94,11 +95,17 @@ function updateBook(){
         author: author.value,
         rating: rating.value
     }
+
     //to do update book
-
+    booksStore.edit(bookId.value, bookData)
     close()
+    refreshKey.value += 1; //this auto refreshes the page to allow the browser to refresh to allow another event to happen eg hiding a button etc
 }
-
+//delete
+function destroyBook(id){
+booksStore.deleteBook(id);
+refreshKey.value += 1;
+}
 //user models
 const userId = ref(null)
 const firstname = ref(null)              // Every single time someone loads the sign-up page fresh, firstname.value (and all the others) start back at null. There's no memory of what a previous visitor typed — each new page load creates a brand new ref(null), completely blank again.
@@ -122,8 +129,8 @@ const data ={
     password: "qwerty1234..", 
     role:2,
     }
-    //to do:add user
-
+    //add user calling data from user store
+    usersStore.addUser(data)
     close()
 }
 //edit user
@@ -153,8 +160,16 @@ function updateUser(){
     role:2,
     }
     //to do: edit user
-
+    usersStore.editUser(userId.value, data)
+    refreshKey.value += 1
     close()
+}
+
+
+//delete
+function destroyUser(id){
+usersStore.deleteUser(id);
+refreshKey.value += 1;
 }
 
 function close(){
@@ -188,7 +203,7 @@ showEditBookDialog.value = false                //this is the close function for
 </script>
 
 <template>
-    <v-container class="text-center mt-12 bg-secondary">
+    <v-container class="text-center mt-12 bg-secondary" :key="refreshKey"> <!--Here we are using the refreshkey to make the data refresh to allow the store to auto refresh so that we can see the results on the new object so when you click save the page auto refreshes so that you can see the new added data i.e we are forcing the table to show the new data changes i.e delete add and edit-->
         <v-card>
             <v-tabs v-model="tab" align-tabs="center" color="primary" >
                 <v-tab :value="1">Books</v-tab>
@@ -236,7 +251,7 @@ showEditBookDialog.value = false                //this is the close function for
                                         <td>{{ item.genre }}</td>
                                         <td> <v-btn color="warning" size="small"><v-icon icon="mdi-eye" ></v-icon> View</v-btn> </td>
                                         <td> <v-btn color="green" size="small" @click="editBook(item)"><v-icon icon="mdi-pencil" ></v-icon> Edit</v-btn> </td>
-                                        <td> <v-btn color="error" size="small"><v-icon icon="mdi-delete" ></v-icon> Delete</v-btn> </td>
+                                        <td> <v-btn color="error" size="small" @click="destroyBook(item.id)"><v-icon icon="mdi-delete"></v-icon> Delete</v-btn> </td>
                                     </tr>
                                 </tbody>
                             </v-table>
@@ -289,7 +304,7 @@ showEditBookDialog.value = false                //this is the close function for
                                         <td>{{ item.address }}</td>
                                         <td> <v-btn color="warning" size="small"><v-icon icon="mdi-eye" ></v-icon> View</v-btn> </td>
                                         <td> <v-btn color="green" size="small" @click="editUser(item)"><v-icon icon="mdi-pencil" ></v-icon> Edit</v-btn> </td>
-                                        <td> <v-btn color="error" size="small"><v-icon icon="mdi-delete" ></v-icon> Delete</v-btn> </td>
+                                        <td> <v-btn color="error" size="small"@click="destroyUser(item.id)"><v-icon icon="mdi-delete" ></v-icon> Delete</v-btn> </td>
                                     </tr>
                                 </tbody>
                             </v-table>
