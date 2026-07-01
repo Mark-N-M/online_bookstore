@@ -6,6 +6,7 @@ const router = useRouter();
 const { logout } = useAuth()
 const isAuthenticated = localStorage.getItem('isAuthenticated')                               //stored within the local storage of the browser hence it basically hides the item that we are referring to
 const isAdmin = localStorage.getItem('isAdmin')
+
 const user = JSON.parse(localStorage.getItem('user'))                                       //logout item
 
 let letter = ''

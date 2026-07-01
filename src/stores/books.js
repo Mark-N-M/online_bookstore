@@ -1,8 +1,8 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 
-export const useBooksStore = defineStore('books',  {
-   state: () => {
+export const useBooksStore = defineStore('books',  {    //simple and ez referencing here i.e just readcode and u gon get it
+   state: () => { //this right here is an example of state where data is stored for easy referencing pinia assist the data now i.e quick reference
      const books = {                                                                                /*NB THE FOLLOWING ARE BOOK OBJECTS WITH VARIOUS OBJECT ID'S SO AS TO PREVENT DUPIICATE ON THE WISHLIST SECTION*/
     0:{                                                                                            //THE OBJECTS CAN BE CALLED DATA MODELS
             id:1,                                                           //these are the id's for books and from here we can take referral when calling the id's while embedding the object data with other objects(THIS WAS AFTER DOING ADMIN ORDER STORES AND USER STORES)

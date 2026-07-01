@@ -40,7 +40,7 @@ const showEditUserDialog = ref(false)
 //3. create the add book form
 
 //book models
-const bookId=ref(null)
+const bookId=ref(null)              //these are used when a user adds a book in that it is reactive data in the sense that when a user creates a new book he data picks it up and makes the changes in accordance to the data models and all of them have be refrence to null so that the data being added is selectively constrained only to those factors i.e bookId,name etc etc 
 const bookName=ref(null)
 const price=ref(null)
 const description =ref(null)
@@ -64,7 +64,7 @@ function addBook(){
         rating: rating.value
     }
     //update books in the store-This should be able to work now
-    booksStore.addBook(bookData)
+    booksStore.addBook(bookData)  //reactive data should be able to function appropriately
     close()//<--close function for once we are finished we can hop out of the dialogue
 }
         
@@ -75,9 +75,9 @@ function editBook(book){
     bookId.value = book.id
     bookName.value = book.name
     price.value = book.price
-    description.value = book.description
+    description.value = book.description                    //this is obeying the data model that we made above
     long_description.value = book.long_description
-    genre.value = book.genre
+    genre.value = book.genre                                //this is now adding functionality to the reactive data that we now had in the data models for books so when we add data into the data model it reacts by creating new data therefore being called reactive data
     image.value = book.image
     author.value = book.author
     rating.value = book.rating
@@ -244,13 +244,13 @@ showEditBookDialog.value = false                //this is the close function for
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="item in books" :key="item.id" >
+                                    <tr v-for="item in books" :key="item.id" >  <!--here item is another temporary variable name i.e just another constant-->
                                         <td>{{ item.name }}</td>
                                         <td>{{ item.price }}</td>
                                         <td>{{ item.author }}</td>
                                         <td>{{ item.genre }}</td>
                                         <td> <v-btn color="warning" size="small"><v-icon icon="mdi-eye" ></v-icon> View</v-btn> </td>
-                                        <td> <v-btn color="green" size="small" @click="editBook(item)"><v-icon icon="mdi-pencil" ></v-icon> Edit</v-btn> </td>
+                                        <td> <v-btn color="green" size="small" @click="editBook(item)"><v-icon icon="mdi-pencil" ></v-icon> Edit</v-btn> </td> <!--this here is an example of an argument so basically the call of the function makes it that it recieves the call of the book selected when called-->
                                         <td> <v-btn color="error" size="small" @click="destroyBook(item.id)"><v-icon icon="mdi-delete"></v-icon> Delete</v-btn> </td>
                                     </tr>
                                 </tbody>
